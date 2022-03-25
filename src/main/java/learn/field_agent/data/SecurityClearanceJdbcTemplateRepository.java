@@ -50,9 +50,11 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
             ps.setString(2, sc.getName());
             return ps;
         }, keyHolder);
-        if (rowsAffected<=0){ return  null; }
+        if (rowsAffected <= 0) {
+            return null;
+        }
         sc.setSecurityClearanceId(keyHolder.getKey().intValue());
-        return  sc;
+        return sc;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
                 + "security_clearance_name = ?, "
                 + "where security_clearance_id = ?";
         // returns > 0 if success
-        return jdbcTemplate.update(sql, sc.getName(), sc.getSecurityClearanceId())>0;
+        return jdbcTemplate.update(sql, sc.getName(), sc.getSecurityClearanceId()) > 0;
     }
 
     @Override

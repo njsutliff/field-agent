@@ -10,6 +10,6 @@ public interface SecurityClearanceRepository {
     SecurityClearance findById(int securityClearanceId);
     SecurityClearance add(SecurityClearance sc);
     boolean update(SecurityClearance sc);
-    @Transactional
+    @Transactional //TODO figure out what this means
     boolean deleteById(int securityClearanceId);
 }

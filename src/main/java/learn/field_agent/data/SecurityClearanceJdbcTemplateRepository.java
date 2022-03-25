@@ -57,11 +57,18 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public boolean update(SecurityClearance sc) {
-        return false;
+        final String sql = "update security_clearence set "
+                + "security_clearance_name = ?, "
+                + "where security_clearance_id = ?";
+        // returns > 0 if success
+        return jdbcTemplate.update(sql, sc.getName(), sc.getSecurityClearanceId())>0;
     }
 
     @Override
     public boolean deleteById(int securityClearanceId) {
-        return false;
+        jdbcTemplate.update("delete from security_clearance where security_clearance_id = ?", securityClearanceId);
+        // returns > 0 if success
+        return jdbcTemplate.update(
+                "delete from security_clearance where security_clearance_id = ?", securityClearanceId) > 0;
     }
 }

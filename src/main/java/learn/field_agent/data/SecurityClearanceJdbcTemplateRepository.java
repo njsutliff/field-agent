@@ -41,8 +41,7 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public SecurityClearance add(SecurityClearance sc) {
-        final String sql = "insert into security_clearance (security_clearance_id,, security_clearance_name) "
-                + " values (?,?);";
+        final String sql = "insert into security_clearance values (?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -59,8 +58,9 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public boolean update(SecurityClearance sc) {
-        final String sql = "update security_clearence set "
-                + "security_clearance_name = ?, "
+        final String sql =
+                "update security_clearance set "
+                        + "name = ? "
                 + "where security_clearance_id = ?";
         // returns > 0 if success
         return jdbcTemplate.update(sql, sc.getName(), sc.getSecurityClearanceId()) > 0;

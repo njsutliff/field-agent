@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SecurityClearanceJdbcTemplateRepositoryTest {
@@ -21,7 +23,16 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     void setup() {
         knownGoodState.set();
     }
-
+    @Test
+    void shouldFindAll(){
+        assertEquals(repository.findAll().size(), 2);
+    }
+    @Test
+    void shouldNotFindNotExisting(){
+        List<SecurityClearance> list = repository.findAll();
+        SecurityClearance russianSpy = new SecurityClearance(3, "Russian spy");
+        assertFalse(list.contains(russianSpy));
+    }
     @Test
     void shouldFindById() {
         SecurityClearance secret = new SecurityClearance(1, "Secret");
@@ -36,4 +47,21 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         actual = repository.findById(3);
         assertEquals(null, actual);
     }
-}
+    @Test void testAdd(){
+        SecurityClearance aboveTopSecret = new SecurityClearance(3, "Above Top Secret");
+        repository.add(aboveTopSecret);
+        SecurityClearance actual = repository.findById(3);
+        assertEquals(aboveTopSecret,actual);
+    }
+    @Test void testUpdate(){
+        SecurityClearance lessSecret = makeSC();
+        lessSecret.setSecurityClearanceId(3);
+        assertTrue(repository.update(lessSecret));
+    }
+    private  SecurityClearance makeSC(){
+        SecurityClearance sc = new SecurityClearance();
+        sc.setName("test");
+        return sc;
+    }
+
+    }

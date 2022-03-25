@@ -44,7 +44,7 @@ public class SecurityClearanceService {
 
     private Result<SecurityClearance> validate(SecurityClearance toValidate) {
         Result<SecurityClearance> result = new Result<>();
-        if(Validations.isNullOrBlank(toValidate.getName()){
+        if(Validations.isNullOrBlank(toValidate.getName())){
             result.addMessage("Security clearance name required.", ResultType.INVALID);
         }
         findAll().stream()

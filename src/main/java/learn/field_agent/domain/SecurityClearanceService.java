@@ -26,32 +26,38 @@ public class SecurityClearanceService {
     public Result<SecurityClearance> add(SecurityClearance sc) {
         Result<SecurityClearance> result = validate(sc);
         if (!result.isSuccess()) {
-            result.addMessage("Unable to add", ResultType.INVALID);
             return result;
         }
-        result.setPayload(repository.add(sc));
+        if (sc.getSecurityClearanceId() != 0) {
+            result.addMessage("Cannot set security Clearance ID with `add`", ResultType.INVALID);
+        }
+        sc = repository.add(sc);
+        result.setPayload(sc);
         return result;
     }
 
     public Result<SecurityClearance> update(SecurityClearance sc) {
-        Result<SecurityClearance> result = validate(sc);
-        return result;
+        return validate(sc);
     }
 
-    boolean deleteById(int securityClearanceId) {
+    public boolean deleteById(int securityClearanceId) {
         return false;
     }
 
     private Result<SecurityClearance> validate(SecurityClearance toValidate) {
         Result<SecurityClearance> result = new Result<>();
-        if(Validations.isNullOrBlank(toValidate.getName())){
+        if (toValidate == null) {
+            result.addMessage("Security clearance cannot be null", ResultType.INVALID);
+            return result;
+        }
+        if (Validations.isNullOrBlank(toValidate.getName())) {
             result.addMessage("Security clearance name required.", ResultType.INVALID);
         }
         findAll().stream()
                 .filter(securityClearance -> securityClearance.getName()
-                .equals(toValidate.getName()))
+                        .equals(toValidate.getName()))
                 .findAny().ifPresent(toNotFind -> result
-                .addMessage("Name cannot be duplicated.", ResultType.INVALID));
-        return  result;
+                        .addMessage("Name cannot be duplicated.", ResultType.INVALID));
+        return result;
     }
 }

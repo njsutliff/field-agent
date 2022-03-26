@@ -28,7 +28,7 @@ public class SecurityClearanceController {
     }
 
     @GetMapping("/{securityClearanceId}")
-    public SecurityClearance findById(int securityClearanceId) {
+    public SecurityClearance findById(@PathVariable int securityClearanceId) {
         return service.findById(securityClearanceId);
     }
 

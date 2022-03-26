@@ -25,7 +25,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     }
     @Test
     void shouldFindAll(){
-        assertEquals(3, repository.findAll().size());
+        assertEquals(2, repository.findAll().size());
     }
     @Test
     void shouldNotFindNotExisting(){
@@ -34,32 +34,29 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         assertFalse(list.contains(russianSpy));
     }
     @Test
-    void shouldFindById() {
+    void shouldFindSecret() {
         SecurityClearance secret = new SecurityClearance(1, "Secret");
-        SecurityClearance topSecret = new SecurityClearance(2, "Top Secret");
 
         SecurityClearance actual = repository.findById(1);
         assertEquals(secret, actual);
-
-        actual = repository.findById(2);
-        assertEquals(topSecret, actual);
 
         actual = repository.findById(10);
         assertEquals(null, actual);
     }
     @Test void testAdd(){
-        SecurityClearance aboveTopSecret = new SecurityClearance();
-        aboveTopSecret.setName("Above Top Secret");
-        repository.add(aboveTopSecret);
-        SecurityClearance actual = repository.findById(3);
-        assertEquals(aboveTopSecret.getSecurityClearanceId(),actual.getSecurityClearanceId());
+        SecurityClearance testAdd = makeSC();
+        SecurityClearance actual = repository.add(testAdd);
+        assertNotNull(actual);
+        assertEquals(testAdd.getSecurityClearanceId(), actual.getSecurityClearanceId());
     }
     @Test void testUpdate(){
         SecurityClearance lessSecret = makeSC();
         lessSecret.setSecurityClearanceId(3);
         assertTrue(repository.update(lessSecret));
     }
-
+    @Test void shouldDelete(){
+        assertTrue(repository.deleteById(3));
+    }
     private  SecurityClearance makeSC(){
         SecurityClearance sc = new SecurityClearance();
         sc.setName("test");

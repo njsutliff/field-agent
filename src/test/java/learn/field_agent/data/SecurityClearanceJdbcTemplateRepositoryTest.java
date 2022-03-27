@@ -25,7 +25,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     }
     @Test
     void shouldFindAll(){
-        assertEquals(2, repository.findAll().size());
+        assertEquals(3, repository.findAll().size());
     }
     @Test
     void shouldNotFindNotExisting(){
@@ -55,7 +55,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         assertTrue(repository.update(lessSecret));
     }
     @Test void shouldDelete(){
-        assertTrue(repository.deleteById(3));
+        assertTrue(repository.deleteById(1));
     }
     private  SecurityClearance makeSC(){
         SecurityClearance sc = new SecurityClearance();

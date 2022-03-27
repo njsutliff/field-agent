@@ -19,8 +19,13 @@ public class SecurityClearanceService {
         return repository.findAll();
     }
 
-    public SecurityClearance findById(int securityClearanceId) {
-        return repository.findById(securityClearanceId);
+    public Result<SecurityClearance> findById(int securityClearanceId) {
+        Result<SecurityClearance> result = new Result<>();
+       if(repository.findById(securityClearanceId)== null){
+           result.addMessage("Security Clearance not found!", ResultType.NOT_FOUND);
+       }
+        result.setPayload(repository.findById(securityClearanceId));
+        return result;
     }
 
     public Result<SecurityClearance> add(SecurityClearance sc) {

@@ -28,8 +28,13 @@ public class SecurityClearanceController {
     }
 
     @GetMapping("/{securityClearanceId}")
-    public SecurityClearance findById(@PathVariable int securityClearanceId) {
-        return service.findById(securityClearanceId);
+    public ResponseEntity<Object> findById(@PathVariable int securityClearanceId) {
+        Result<SecurityClearance> result = service.findById(securityClearanceId);
+       if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
+        }
+
+        return ErrorResponse.build(result);
     }
 
     @PostMapping

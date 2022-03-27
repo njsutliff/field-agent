@@ -28,7 +28,7 @@ public class SecurityClearanceServiceTest {
     @Test void findGuy(){
         SecurityClearance expected = makeClearance();
         when(repository.findById(1)).thenReturn(expected);
-        SecurityClearance actual = service.findById(1);
+        SecurityClearance actual = service.findById(1).getPayload();
         assertEquals(expected, actual);
     }
     //Fails because tried to set ID with add.

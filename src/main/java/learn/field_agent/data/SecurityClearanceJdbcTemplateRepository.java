@@ -34,9 +34,12 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
                 + "from security_clearance "
                 + "where security_clearance_id = ?;";
 
-        return jdbcTemplate.query(sql, new SecurityClearanceMapper(), securityClearanceId)
+        SecurityClearance sc = jdbcTemplate.query(sql, new SecurityClearanceMapper(), securityClearanceId)
                 .stream()
                 .findFirst().orElse(null);
+
+        return sc;
+
     }
 
     @Override

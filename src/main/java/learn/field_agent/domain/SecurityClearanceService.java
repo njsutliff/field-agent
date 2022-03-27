@@ -42,7 +42,15 @@ public class SecurityClearanceService {
     }
 
     public Result<SecurityClearance> update(SecurityClearance sc) {
-        return validate(sc);
+        Result<SecurityClearance> result = validate(sc);
+        if (!result.isSuccess()){
+            return result;
+        }
+
+        if(!repository.update(sc)){
+            result.addMessage("Security Clearance not found", ResultType.INVALID);
+        }
+        return result;
     }
 
     public boolean deleteById(int securityClearanceId) {

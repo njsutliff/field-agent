@@ -46,15 +46,27 @@ public class SecurityClearanceService {
         if (!result.isSuccess()){
             return result;
         }
-
         if(!repository.update(sc)){
             result.addMessage("Security Clearance not found", ResultType.INVALID);
         }
         return result;
     }
 
-    public boolean deleteById(int securityClearanceId) {
-        return false;
+    public Result<SecurityClearance> deleteById(int securityClearanceId) {
+              // if false 404 else true TODO validation is in use
+        Result<SecurityClearance> result =validateFound(securityClearanceId);
+            if(!result.isSuccess()){
+                return result;
+            }
+            return result;
+    }
+
+    private Result<SecurityClearance> validateFound(int securityClearanceId) {
+        Result<SecurityClearance> result = new Result<>();
+        if (!findAll().contains(findById(securityClearanceId).getPayload())){
+            result.addMessage("Security Clearance not found", ResultType.NOT_FOUND);
+        }
+        return result;
     }
 
     private Result<SecurityClearance> validate(SecurityClearance toValidate) {

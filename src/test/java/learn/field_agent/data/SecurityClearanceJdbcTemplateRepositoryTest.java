@@ -25,7 +25,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     }
     @Test
     void shouldFindAll(){
-        assertEquals(3, repository.findAll().size());
+        assertEquals(2, repository.findAll().size());
     }
     @Test
     void shouldNotFindNotExisting(){

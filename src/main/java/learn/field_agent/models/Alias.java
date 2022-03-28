@@ -37,4 +37,11 @@ public class Alias {
     public void setAgentId(int agentId) {
         this.agentId = agentId;
     }
+    public Alias(int aliasId, String alias, String persona, int agentId) {
+        this.aliasId = aliasId;
+        this.alias = alias;
+        this.persona = persona;
+        this.agentId = agentId;
+    }
+
 }

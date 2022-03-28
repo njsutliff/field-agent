@@ -12,11 +12,11 @@ public class AliasMapper implements RowMapper<Alias> {
     @Override
     public Alias mapRow(ResultSet resultSet, int i) throws SQLException {
 
-        Alias alias = new Alias();
-        alias.setId(resultSet.getInt("alias_id"));
-        alias.setAlias(resultSet.getString("name"));
-        alias.setPersona(resultSet.getString("persona"));
-        alias.setAgentId(resultSet.getInt("agent_id"));
+        Alias alias = new Alias((resultSet.getInt("alias_id")),
+                (resultSet.getString("name")),
+                (resultSet.getString("persona")),
+                (resultSet.getInt("agent_id"))
+        );
         return alias;
     }
 }

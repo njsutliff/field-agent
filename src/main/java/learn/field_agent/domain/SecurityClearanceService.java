@@ -49,16 +49,17 @@ public class SecurityClearanceService {
         if(!repository.update(sc)){
             result.addMessage("Security Clearance not found", ResultType.INVALID);
         }
+        Integer value = repository.getJdbcTemplate().queryForObject(
+                "select count(*) from security_clearance where name = ?", Integer.class, sc.getName());
+        if (value != null && value > 0) {
+            result.addMessage("Clearance name already used, cannot update it.", ResultType.INVALID);
+            return result;
+        }
         return result;
     }
 
-    public Result<SecurityClearance> deleteById(int securityClearanceId) {
-              // if false 404 else true TODO validation is in use
-        Result<SecurityClearance> result =validateFound(securityClearanceId);
-            if(!result.isSuccess()){
-                return result;
-            }
-            return result;
+    public boolean deleteById(int securityClearanceId) {
+        return repository.deleteById(securityClearanceId);
     }
 
     private Result<SecurityClearance> validateFound(int securityClearanceId) {

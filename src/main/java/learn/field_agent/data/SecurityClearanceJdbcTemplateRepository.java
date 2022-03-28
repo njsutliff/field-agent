@@ -15,10 +15,10 @@ import java.util.List;
 public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanceRepository {
 
     private final JdbcTemplate jdbcTemplate;
-
     public SecurityClearanceJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+    public  JdbcTemplate getJdbcTemplate(){ return jdbcTemplate;}
 
     @Override
     public List<SecurityClearance> findAll() {
@@ -71,7 +71,7 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public boolean deleteById(int securityClearanceId) {
-        jdbcTemplate.update("delete from agency_agent where security_clearance_id = ?", securityClearanceId);
+        //jdbcTemplate.update("delete from agency_agent where security_clearance_id = ?", securityClearanceId);
         // returns > 0 if success
         return jdbcTemplate.update(
                 "delete from security_clearance where security_clearance_id = ?", securityClearanceId) > 0;

@@ -2,17 +2,19 @@ package learn.field_agent.domain;
 
 import learn.field_agent.data.SecurityClearanceRepository;
 import learn.field_agent.models.SecurityClearance;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SecurityClearanceService {
     private final SecurityClearanceRepository repository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public SecurityClearanceService(SecurityClearanceRepository repository) {
+    public SecurityClearanceService(SecurityClearanceRepository repository, JdbcTemplate jdbcTemplate) {
         this.repository = repository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<SecurityClearance> findAll() {
@@ -49,17 +51,21 @@ public class SecurityClearanceService {
         if(!repository.update(sc)){
             result.addMessage("Security Clearance not found", ResultType.INVALID);
         }
-        Integer value = repository.getJdbcTemplate().queryForObject(
-                "select count(*) from security_clearance where name = ?", Integer.class, sc.getName());
-        if (value != null && value > 0) {
-            result.addMessage("Clearance name already used, cannot update it.", ResultType.INVALID);
-            return result;
-        }
+
         return result;
     }
 
-    public boolean deleteById(int securityClearanceId) {
-        return repository.deleteById(securityClearanceId);
+    public Result<SecurityClearance> deleteById(int securityClearanceId) {
+        Result<SecurityClearance> result = new Result<>(); //TODO not working find if "in service"
+        int count = jdbcTemplate.queryForObject(
+                "select count(*) from agency_agent where security_clearance_id = ?;", Integer.class, securityClearanceId);
+        if(count>0){
+            result.addMessage("ID in use", ResultType.INVALID);
+        }
+        if (!repository.deleteById(securityClearanceId)){
+            result.addMessage("Not found", ResultType.NOT_FOUND);
+        }
+        return result;
     }
 
     private Result<SecurityClearance> validateFound(int securityClearanceId) {

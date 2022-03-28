@@ -1,21 +1,26 @@
 @url = http://localhost:8080/api/security/clearance
+
+###Find All
 GET {{url}} HTTP/1.1
-###
+
+###Find By Id
 GET {{url}}/1 HTTP/1.1
-###
+
+###Add a Clearance
 POST  {{url}} HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Test"
+  "name": "[name here]"
 }
-###
-PUT {{url}}/1 HTTP/1.1
+
+###Update a Clearance
+PUT {{url}}/3 HTTP/1.1
 Content-Type: application/json
 
 {
-  "securityClearanceId": 1,
-  "name": "Top Secret Updated"
+"securityClearanceId": 3,
+  "name": "[name here]"
 }
-###
-DELETE {{url}}/1 HTTP/1.1
+###Delete a Clearance
+DELETE {{url}}/3 HTTP/1.1

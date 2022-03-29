@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -70,9 +71,10 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
     }
 
     @Override
+    @Transactional
     public boolean deleteById(int securityClearanceId) {
         // returns > 0 if success
-        return jdbcTemplate.update(
-                "delete from security_clearance where security_clearance_id = ?;", securityClearanceId) > 0;
+        return jdbcTemplate.update("delete from security_clearance where security_clearance_id = ?;",
+                securityClearanceId) > 0;
     }
 }

@@ -6,11 +6,12 @@ import learn.field_agent.models.Alias;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
-
+@Repository
 public class AliasJdbcTemplateRepository implements AliasRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -33,7 +34,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     @Override
     public Alias add(Alias alias) {
         final String sql = "insert into alias (name, persona, agent_id"
-                + "values(?,?,?,?)";
+                + "values(?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

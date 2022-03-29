@@ -21,8 +21,12 @@ public class AliasJdbcTemplateRepositoryTest {
     }
     @Test
     void shouldAdd() {
-        Alias test = new Alias(1, "test", "testPersona", 1);
-        Alias actual =         repository.add(test);
+        Alias test = new Alias();
+        test.setAlias("test");
+        test.setPersona("testPersona");
+        test.setAgentId(1);
+
+        Alias actual =    repository.add(test);
         assertEquals(test, actual);
     }
 

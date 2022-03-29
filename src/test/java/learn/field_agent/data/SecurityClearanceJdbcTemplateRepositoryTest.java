@@ -42,7 +42,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         assertEquals(secret, actual);
 
         actual = repository.findById(10);
-        assertEquals(null, actual);
+        assertNull(actual);
     }
     @Test void testAdd(){
         SecurityClearance testAdd = makeSC();
@@ -56,8 +56,8 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         assertTrue(repository.update(lessSecret));
     }
     @Test void shouldDelete(){
-        assertTrue(repository.deleteById(3));
-        assertFalse(repository.deleteById(3));
+        assertTrue(repository.deleteById(2));
+        assertFalse(repository.deleteById(2));
 
     }
     private  SecurityClearance makeSC(){

@@ -45,12 +45,11 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public SecurityClearance add(SecurityClearance sc) {
-        final String sql = "insert into security_clearance values (?,?);";
+        final String sql = "insert into security_clearance (name)" + "values(?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, sc.getSecurityClearanceId());
-            ps.setString(2, sc.getName());
+            ps.setString(1, sc.getName());
             return ps;
         }, keyHolder);
         if (rowsAffected <= 0) {

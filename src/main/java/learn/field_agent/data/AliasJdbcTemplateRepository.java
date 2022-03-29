@@ -1,7 +1,6 @@
 package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AliasMapper;
-import learn.field_agent.data.mappers.LocationMapper;
 import learn.field_agent.models.Alias;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.List;
+
 @Repository
 public class AliasJdbcTemplateRepository implements AliasRepository {
 
@@ -38,7 +37,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, alias.getAlias());
+            ps.setString(1, alias.getName());
             ps.setString(2, alias.getPersona());
             ps.setInt(3, alias.getAgentId());
             return ps;
@@ -51,16 +50,17 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     }
 
     @Override
-    public boolean update(Alias agent) {
+    public boolean update(Alias alias) {
         final String sql = "update alias set "
                 + "name = ?, "
                 + "persona = ?, "
-                + "agent_id = ?, " +
-                "where alias_id > 0";
+                + "agent_id = ? " +
+                "where alias_id = ?;";
         return jdbcTemplate.update(sql,
-                agent.getAlias(),
-                agent.getPersona(),
-                agent.getAgentId()) > 0;
+                alias.getName(),
+                alias.getPersona(),
+                alias.getAgentId(),
+                alias.getId()) > 0;
 
     }
 

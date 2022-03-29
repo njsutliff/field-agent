@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class AliasJdbcTemplateRepositoryTest {
@@ -21,25 +21,33 @@ public class AliasJdbcTemplateRepositoryTest {
     }
     @Test
     void shouldAdd() {
-        Alias test = new Alias();
-        test.setAlias("test");
-        test.setPersona("testPersona");
-        test.setAgentId(1);
-
-        Alias actual =    repository.add(test);
+        Alias test = makeAlias();
+        Alias actual = repository.add(test);
         assertEquals(test, actual);
     }
 
     @Test
     void shouldFindByAgentId() {
-         repository.findByAgentId(1);
+         assertNotNull(repository.findByAgentId(1));
     }
 
     @Test
-    void update() {
+    void shouldUpdate() {
+        Alias toUpdate = makeAlias();
+        toUpdate.setId(1);
+        toUpdate.setName("new");
+        assertTrue(repository.update(toUpdate));
     }
+
+
 
     @Test
     void deleteById() {
+    }
+    private Alias makeAlias() {
+        Alias alias = new Alias();
+        alias.setName("test");
+        alias.setAgentId(1);
+        return  alias;
     }
 }

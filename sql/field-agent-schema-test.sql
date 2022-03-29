@@ -99,7 +99,8 @@ create table alias (
 delimiter //
 create procedure set_known_good_state()
 begin
-
+	delete from alias;
+    alter table alias auto_increment = 1;
 	delete from location;
     alter table location auto_increment = 1;
     delete from agency_agent;

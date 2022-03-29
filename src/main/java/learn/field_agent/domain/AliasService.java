@@ -1,7 +1,6 @@
 package learn.field_agent.domain;
 
 import learn.field_agent.data.AliasRepository;
-import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
 public class AliasService {
 
@@ -63,7 +62,7 @@ public class AliasService {
         if(alias.getAgentId()<= 0){
             result.addMessage("Invalid agent ID", ResultType.INVALID);
         }
-        if (Validations.isNullOrBlank(alias.getAlias())) {
+        if (Validations.isNullOrBlank(alias.getName())) {
             result.addMessage("Name is required", ResultType.INVALID);
             return result;
         }

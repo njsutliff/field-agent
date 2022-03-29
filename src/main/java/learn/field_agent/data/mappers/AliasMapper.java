@@ -1,6 +1,5 @@
 package learn.field_agent.data.mappers;
 
-import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -13,7 +12,7 @@ public class AliasMapper implements RowMapper<Alias> {
     public Alias mapRow(ResultSet resultSet, int i) throws SQLException {
         Alias alias =  new Alias();
         alias.setId(resultSet.getInt("alias_id"));
-                alias.setAlias(resultSet.getString("name"));
+                alias.setName(resultSet.getString("name"));
                 alias.setPersona(resultSet.getString("persona"));
                 alias.setAgentId(resultSet.getInt("agent_id"));
         return alias;

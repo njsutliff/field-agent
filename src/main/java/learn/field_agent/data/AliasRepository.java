@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
  public interface AliasRepository {
         Alias findByAgentId(int agentId);
         Alias add(Alias alias);
-        boolean update(Alias agent);
+        boolean update(Alias alias);
         @Transactional
         boolean deleteById(int aliasId);
 

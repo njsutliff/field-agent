@@ -6,9 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface AliasRepository {
-    List<Alias> findAll();
 
-    Alias findById(int aliasId);
+    Alias  findByAgentId(int agentId);
 
     Alias add(Alias alias);
 

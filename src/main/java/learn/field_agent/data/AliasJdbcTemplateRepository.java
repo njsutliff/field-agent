@@ -20,19 +20,12 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     }
 
     @Override
-    public List<Alias> findAll() {
-        final String sql = "select alias_id, name, persona, agent_id" +
-                " from alias limit 1000";
-        return jdbcTemplate.query(sql, new AliasMapper());
-    }
-
-    @Override
-    public Alias findById(int aliasId) {
+    public Alias findByAgentId(int agentId) {
         final String sql = "select alias_id, name, persona, agent_id "
                 + "from alias "
-                + "where alias_id = ?;";
+                + "where agent_id = ?;";
 
-        return jdbcTemplate.query(sql, new AliasMapper(), aliasId).stream()
+        return jdbcTemplate.query(sql, new AliasMapper(), agentId).stream()
                 .findFirst()
                 .orElse(null);
     }

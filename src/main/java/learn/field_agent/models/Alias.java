@@ -6,6 +6,10 @@ public class Alias {
     private  String persona;
     private  int agentId;
 
+    public Alias() {
+
+    }
+
 
     public int getId() {
         return aliasId;

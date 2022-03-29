@@ -33,8 +33,8 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
 
     @Override
     public Alias add(Alias alias) {
-        final String sql = "insert into alias (name, persona, agent_id"
-                + "values(?,?,?)";
+        final String sql = "insert into alias (name, persona, agent_id)"
+                + "values (?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

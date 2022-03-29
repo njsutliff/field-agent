@@ -43,6 +43,9 @@ public class AliasJdbcTemplateRepositoryTest {
 
     @Test
     void deleteById() {
+        assertTrue(repository.deleteById(1));
+        assertFalse(repository.deleteById(1));
+
     }
     private Alias makeAlias() {
         Alias alias = new Alias();

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class AliasJdbcTemplateRepository implements AliasRepository {
@@ -20,14 +21,12 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     }
 
     @Override
-    public Alias findByAgentId(int agentId) {
+    public List<Alias> findByAgentId(int agentId) {
         final String sql = "select alias_id, name, persona, agent_id "
                 + "from alias "
                 + "where agent_id = ?;";
 
-        return jdbcTemplate.query(sql, new AliasMapper(), agentId).stream()
-                .findFirst()
-                .orElse(null);
+        return jdbcTemplate.query(sql, new AliasMapper(), agentId);
     }
 
     @Override

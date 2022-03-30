@@ -2,6 +2,11 @@ package learn.field_agent.domain;
 
 import learn.field_agent.data.AliasRepository;
 import learn.field_agent.models.Alias;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class AliasService {
 
     private final AliasRepository repository;
@@ -10,7 +15,7 @@ public class AliasService {
         this.repository = repository;
     }
 
-    public Alias findByAgentId(int agentId) {
+    public List<Alias> findByAgentId(int agentId) {
         return repository.findByAgentId(agentId);
     }
 
@@ -20,8 +25,12 @@ public class AliasService {
             return result;
         }
         if (alias.getId() != 0) {
-            result.addMessage("Alias id cannot be set during add", ResultType.INVALID);
+            result.addMessage("Alias id cannot be set during add. ", ResultType.INVALID);
             return result;
+        }
+        if(findByAgentId(alias.getAgentId())==alias
+        && Validations.isNullOrBlank(alias.getPersona())){
+            result.addMessage("Persona is required with a duplicate name. ", ResultType.INVALID);
         }
         // require persona if name duplicated
         alias = repository.add(alias);

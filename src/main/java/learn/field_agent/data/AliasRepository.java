@@ -2,8 +2,11 @@ package learn.field_agent.data;
 
 import learn.field_agent.models.Alias;
 import org.springframework.transaction.annotation.Transactional;
- public interface AliasRepository {
-        Alias findByAgentId(int agentId);
+
+import java.util.List;
+
+public interface AliasRepository {
+        List<Alias> findByAgentId(int agentId);
         Alias add(Alias alias);
         boolean update(Alias alias);
         @Transactional

@@ -22,7 +22,7 @@ public class AliasController {
     public AliasController(AliasService service) {
         this.service = service;
     }
-    @GetMapping("/{agentId}")
+    @GetMapping("/agent/{agentId}")
     public List<Alias> findByAgentId(int agentId){
     return service.findByAgentId(agentId);
     }
@@ -35,11 +35,11 @@ public class AliasController {
     }
         return ErrorResponse.build(result);
     }
-    @PutMapping("/{agentId}")
-    public ResponseEntity<Object> update(int agentId, Alias alias){
+    @PutMapping("/{aliasId}")
+    public ResponseEntity<Object> update(int aliasId, Alias alias){
         return null;//TODO
     }
-    @DeleteMapping("/{agentId}")
+    @DeleteMapping("/{aliasId}")
     public ResponseEntity<Void> deleteById(int aliasId){
         return null;//TODO
     }

@@ -2,6 +2,7 @@ package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AliasMapper;
 import learn.field_agent.models.Alias;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -66,5 +67,10 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     @Override
     public boolean deleteById(int aliasId) {
         return jdbcTemplate.update("delete from alias where alias_id = ?;", aliasId) > 0;
+    }
+
+    @Override
+    public JdbcOperations getJdbcTemplate() {
+        return jdbcTemplate;
     }
 }

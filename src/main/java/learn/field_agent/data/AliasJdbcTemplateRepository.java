@@ -1,6 +1,8 @@
 package learn.field_agent.data;
 
+import learn.field_agent.data.mappers.AgentAgencyMapper;
 import learn.field_agent.data.mappers.AliasMapper;
+import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,8 +19,14 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    AgentJdbcTemplateRepository agentJdbcTemplateRepository;
     public AliasJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public JdbcOperations getJdbcTemplate() {
+        return jdbcTemplate;
     }
 
     @Override
@@ -26,9 +34,10 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         final String sql = "select alias_id, name, persona, agent_id "
                 + "from alias "
                 + "where agent_id = ?;";
-
+        ;
         return jdbcTemplate.query(sql, new AliasMapper(), agentId);
     }
+
 
     @Override
     public Alias add(Alias alias) {
@@ -69,8 +78,5 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         return jdbcTemplate.update("delete from alias where alias_id = ?;", aliasId) > 0;
     }
 
-    @Override
-    public JdbcOperations getJdbcTemplate() {
-        return jdbcTemplate;
-    }
+
 }

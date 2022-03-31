@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -28,7 +30,11 @@ public class AliasJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByAgentId() {
-         assertNotNull(repository.findByAgentId(1));
+        List<Alias> list = repository.findByAgentId(1);
+        System.out.println(list.get(0));
+        System.out.println(list.get(0).getAgentId());
+         assertNotNull(list);
+         assertEquals(list.size(), 2); // should have Test in the sql now
     }
 
     @Test

@@ -1,15 +1,20 @@
 package learn.field_agent.models;
 
 public class Alias {
-    private  int aliasId;
+    private int aliasId;
     private String name;
-    private  String persona;
-    private  int agentId;
+    private String persona;
+    private int agentId;
 
     public Alias() {
 
     }
-
+    public Alias(int aliasId, String name, String persona, int agentId) {
+        this.aliasId = aliasId;
+        this.name = name;
+        this.persona = persona;
+        this.agentId = agentId;
+    }
 
     public int getId() {
         return aliasId;
@@ -38,14 +43,11 @@ public class Alias {
     public int getAgentId() {
         return agentId;
     }
+
     public void setAgentId(int agentId) {
         this.agentId = agentId;
     }
-    public Alias(int aliasId, String name, String persona, int agentId) {
-        this.aliasId = aliasId;
-        this.name = name;
-        this.persona = persona;
-        this.agentId = agentId;
-    }
+
+
 
 }

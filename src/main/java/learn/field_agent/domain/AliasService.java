@@ -15,8 +15,10 @@ public class AliasService {
         this.repository = repository;
     }
 
-    public List<Alias> findByAgentId(int agentId) {
-        return repository.findByAgentId(agentId);
+    public Result<List<Alias>> findByAgentId(int agentId) {
+        Result<List<Alias>> result = new Result<>();
+        result.setPayload(repository.findByAgentId(agentId));
+        return result;
     }
 
     public Result<Alias> add(Alias alias) {
@@ -28,15 +30,15 @@ public class AliasService {
             result.addMessage("Alias id cannot be set during add. ", ResultType.INVALID);
             return result;
         }
-
+/*
         Integer value1 = repository.getJdbcTemplate().queryForObject(
                 "select count(*) from agent where agent_id = ?", Integer.class, alias.getAgentId());
         if (value1 != null && !(value1 > 0)) {
             result.addMessage("Agent ID not found. Need a valid agent ID to add an alias.", ResultType.INVALID);
             return result;
-        }
+        }*/
 
-        if(findByAgentId(alias.getAgentId())==alias
+        if(findByAgentId(alias.getAgentId()).getPayload().contains(alias)
         && Validations.isNullOrBlank(alias.getPersona())){
             result.addMessage("Persona is required with a duplicate name. ", ResultType.INVALID);
         }

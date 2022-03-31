@@ -4,6 +4,7 @@ import learn.field_agent.domain.AliasService;
 import learn.field_agent.domain.Result;
 import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
+import learn.field_agent.models.SecurityClearance;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,18 @@ public class AliasController {
     public AliasController(AliasService service) {
         this.service = service;
     }
+
     @GetMapping("/agent/{agentId}")
-    public List<Alias> findByAgentId(int agentId){
-    return service.findByAgentId(agentId);
+    public ResponseEntity<Object> findByAgentId(@PathVariable int agentId){
+        Result<List<Alias>> result = service.findByAgentId(agentId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
+        }
+        return ErrorResponse.build(result);
     }
+
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody  Alias alias){
+    public ResponseEntity<Object> add(@RequestBody(required = false)  Alias alias){
     Result<Alias> result = service.add(alias);
 
     if(result.isSuccess()){
@@ -37,8 +44,12 @@ public class AliasController {
     }
     @PutMapping("/{aliasId}")
     public ResponseEntity<Object> update(int aliasId, Alias alias){
-        return null;//TODO
-    }
+        Result<Alias> result = service.update(alias);
+        if(result.isSuccess()){
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }//TODO
     @DeleteMapping("/{aliasId}")
     public ResponseEntity<Void> deleteById(int aliasId){
         return null;//TODO

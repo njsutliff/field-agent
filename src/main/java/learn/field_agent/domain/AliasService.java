@@ -36,8 +36,8 @@ public class AliasService {
         if (value1 != null && !(value1 > 0)) {
             result.addMessage("Agent ID not found. Need a valid agent ID to add an alias.", ResultType.INVALID);
             return result;
-        }*/
-
+        }
+*/
         if(findByAgentId(alias.getAgentId()).getPayload().contains(alias)
         && Validations.isNullOrBlank(alias.getPersona())){
             result.addMessage("Persona is required with a duplicate name. ", ResultType.INVALID);

@@ -34,7 +34,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         final String sql = "select alias_id, name, persona, agent_id "
                 + "from alias "
                 + "where agent_id = ?;";
-        ;
+        agentJdbcTemplateRepository.findById(agentId);
         return jdbcTemplate.query(sql, new AliasMapper(), agentId);
     }
 

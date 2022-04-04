@@ -144,8 +144,8 @@ begin
 				    
                     
 	insert into alias 
-    (`name`, agent_id)
-    values( 'test', 1);
+    (alias_id,`name`, persona, agent_id)
+    values(1, 'test', 'test', 1);
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)
     select
